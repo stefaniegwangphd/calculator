@@ -1,0 +1,45 @@
+button {
+    margin:10px;
+    padding:10px;
+    border-radius:10px;
+    font:Helvetica;
+    color:white;
+    font-size:16px;
+}
+
+.btnOp {
+    background-color:#FF9500;
+}
+.numerals {
+    background-color: #505050;
+    transition-duration: 0.1s;
+}
+
+.numerals:hover {
+    background-color: #D4D4D2;
+    color: white;
+  }
+
+.btn {
+    background-color:#D4D4D2;
+    color:#505050;
+}
+
+.btnZero {
+    display:flex;
+    /* flex-grow:1; */
+}
+.box {
+    display:flex;
+    background-color: #1c1c1c;
+    flex-direction: column;
+    width:400 px;
+    /* flex-grow:1; */
+    align-items:stretch;
+}
+
+.calc-row {
+    flex-direction:row;
+    align-items:stretch;
+    /* flex-grow:1; */
+}
