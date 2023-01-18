@@ -11,7 +11,7 @@ const multiply = function(a,b) {
 }
 
 const divide = function(a,b) {
-    return Math.round(a/b*100000)/100000;
+    return a/b
 }
 
 const operate = function(operation, x,y) {
@@ -32,6 +32,9 @@ const operate = function(operation, x,y) {
             }
     }
 }
+function roundResult(number) {
+    return Math.round(number * 1000) / 1000
+  }
 
 const clearBtn = document.querySelector('#clear');
 clearBtn.addEventListener('click',() => location.reload());
@@ -46,6 +49,14 @@ const input=document.createElement('div');
 let displayVar='';
 let displayOp='';
 let inputA='';
+
+numerals.forEach(button => { button.addEventListener('click', displayDigit) });
+
+btnOp.forEach(button => { button.addEventListener('click', displayOperation) });
+
+equalBtn.addEventListener('click', evaluate);
+
+display.appendChild(input);
 
 const displayDigit=function() {
     if (displayVar==='' && this.id==='.') {
@@ -68,7 +79,7 @@ const displayDigit=function() {
 }
 
 const evaluate=function() {
-    let answer=operate(displayOp, inputA, displayVar);
+    const answer=roundResult(operate(displayOp, inputA, displayVar));
     input.textContent=answer;
     inputA=answer;
     displayVar='';
@@ -77,25 +88,18 @@ const evaluate=function() {
 
 const displayOperation=function() {
     displayOp =this.id;
-    // if (inputA!='') {
-    //     evaluate;
-    // } else {
-    // }
     if (inputA==='') {
         inputA=displayVar;
         displayVar='';
         input.textContent=displayOp;
-    } else {
-        // input.textContent=operate(displayOp, inputA, displayVar);
-        // evaluate;
+    } 
+    else {
+        const answer=roundResult(operate(displayOp, inputA, displayVar));
+        input.textContent=answer;
+        inputA=answer;
+        // console.log('inputA: ' +inputA);
+        // console.log('displayVar: ' +displayVar);
         displayVar='';
     }
 }
 
-numerals.forEach(button => { button.addEventListener('click', displayDigit) });
-
-btnOp.forEach(button => { button.addEventListener('click', displayOperation) });
-
-equalBtn.addEventListener('click', evaluate);
-
-display.appendChild(input);
