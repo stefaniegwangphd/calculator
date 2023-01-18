@@ -43,16 +43,41 @@ document.getElementById(".").onclick = function() {
     this.disabled = true; //need to make sure it is enabled after clicking an operation button
 }
 
-const buttons = document.querySelectorAll('.btn');
+const numerals = document.querySelectorAll('.numerals');
+const btnOp = document.querySelectorAll('.btnOp');
+const equalBtn = document.querySelector('#equals');
 const display=document.querySelector('#input');
 const input=document.createElement('div');
 let displayVar='';
+let displayOp='';
+let inputA='';
 
-buttons.forEach(button => { button.addEventListener('click', function() {
+const displayDigit=function() {
     displayVar +=this.id;
     input.textContent=displayVar;
-    console.log(displayVar);
-}) });
+}
 
+const displayOperation=function() {
+    displayOp =this.id;
+    input.textContent=displayOp;
+    if (inputA==='') {
+        inputA=displayVar;
+        displayVar='';
+    } else {
+        displayVar='';
+    }
+}
+
+numerals.forEach(button => { button.addEventListener('click', displayDigit) });
+
+btnOp.forEach(button => { button.addEventListener('click', displayOperation) });
+
+equalBtn.addEventListener('click', ()=> {
+    let answer=operate(displayOp, inputA, displayVar);
+    input.textContent=answer;
+    inputA=answer;
+    displayVar='';
+    displayOp='';
+});
 
 display.appendChild(input);
