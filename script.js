@@ -11,7 +11,7 @@ const multiply = function(a,b) {
 }
 
 const divide = function(a,b) {
-    return a/b;
+    return Math.round(a/b*100000)/100000;
 }
 
 const operate = function(operation, x,y) {
@@ -26,7 +26,7 @@ const operate = function(operation, x,y) {
             return multiply(a,b);
         case '÷':
             if (b===0) {
-                return 'undefined'
+                return 'illegal math!'
             } else {
                 return divide(a,b)
             }
@@ -36,14 +36,9 @@ const operate = function(operation, x,y) {
 const clearBtn = document.querySelector('#clear');
 clearBtn.addEventListener('click',() => location.reload());
 
-// below this needs tweaking
-
-document.getElementById(".").onclick = function() {
-    //disable decimal button
-    this.disabled = true; //need to make sure it is enabled after clicking an operation button
-}
-
 const numerals = document.querySelectorAll('.numerals');
+const pmBtn=document.getElementById('#pm');
+const decimalBtn=document.getElementById(".");
 const btnOp = document.querySelectorAll('.btnOp');
 const equalBtn = document.querySelector('#equals');
 const display=document.querySelector('#input');
@@ -53,17 +48,46 @@ let displayOp='';
 let inputA='';
 
 const displayDigit=function() {
-    displayVar +=this.id;
+    if (displayVar==='' && this.id==='.') {
+        displayVar += 0+this.id;
+    } else if (this.id==='pm'){
+        if (displayVar.includes('-')===false) {
+            displayVar='-'+displayVar;
+        } else {
+            displayVar=displayVar.substring(1)
+        }
+    }
+    else {
+        displayVar +=this.id;
+    }
+    if (displayVar.includes('.')===true) {
+        decimalBtn.onclick = function() {
+        this.disabled = true;}
+    }
     input.textContent=displayVar;
+}
+
+const evaluate=function() {
+    let answer=operate(displayOp, inputA, displayVar);
+    input.textContent=answer;
+    inputA=answer;
+    displayVar='';
+    displayOp='';
 }
 
 const displayOperation=function() {
     displayOp =this.id;
-    input.textContent=displayOp;
+    // if (inputA!='') {
+    //     evaluate;
+    // } else {
+    // }
     if (inputA==='') {
         inputA=displayVar;
         displayVar='';
+        input.textContent=displayOp;
     } else {
+        // input.textContent=operate(displayOp, inputA, displayVar);
+        // evaluate;
         displayVar='';
     }
 }
@@ -72,12 +96,6 @@ numerals.forEach(button => { button.addEventListener('click', displayDigit) });
 
 btnOp.forEach(button => { button.addEventListener('click', displayOperation) });
 
-equalBtn.addEventListener('click', ()=> {
-    let answer=operate(displayOp, inputA, displayVar);
-    input.textContent=answer;
-    inputA=answer;
-    displayVar='';
-    displayOp='';
-});
+equalBtn.addEventListener('click', evaluate);
 
 display.appendChild(input);
