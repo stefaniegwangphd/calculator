@@ -18,6 +18,10 @@ button {
 .btnOp, #equals {
     background-color:#FF9500;
 }
+
+.btnOp:hover, #equals:hover {
+    background-color: #ffb348;
+}
 .numerals {
     background-color: #505050;
     transition-duration: 0.1s;
@@ -31,6 +35,10 @@ button {
 .topBtn {
     background-color:#D4D4D2;
     color:#505050;
+}
+
+.topBtn:hover {
+    background-color:#f4f4f4;
 }
 
 .calculator {
