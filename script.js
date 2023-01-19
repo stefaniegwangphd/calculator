@@ -39,9 +39,10 @@ function roundResult(number) {
 const clearBtn = document.querySelector('#clear');
 clearBtn.addEventListener('click',() => location.reload());
 
+const buttons=document.querySelectorAll('.btn');
 const numerals = document.querySelectorAll('.numerals');
-const pmBtn=document.getElementById('#pm');
 const decimalBtn=document.getElementById(".");
+const deleteBtn=document.querySelector("#backspace");
 const btnOp = document.querySelectorAll('.btnOp');
 const equalBtn = document.querySelector('#equals');
 const display=document.querySelector('#input');
@@ -50,13 +51,15 @@ let displayVar='';
 let displayOp='';
 let inputA='';
 
-numerals.forEach(button => { button.addEventListener('click', displayDigit) });
+// buttons.forEach(button => console.log(button.textContent));
 
-btnOp.forEach(button => { button.addEventListener('click', displayOperation) });
 
-equalBtn.addEventListener('click', evaluate);
+// console.log(deleteBtn.textContent);
 
-display.appendChild(input);
+// const keyboardInput=function(event) {
+//     let key=event.target.textContent;
+//     console.log(key);
+// }
 
 const displayDigit=function() {
     if (displayVar==='' && this.id==='.') {
@@ -67,6 +70,8 @@ const displayDigit=function() {
         } else {
             displayVar=displayVar.substring(1)
         }
+    } else if (this.id==='backspace') {
+        displayVar=displayVar.slice(0,-1);
     }
     else {
         displayVar +=this.id;
@@ -97,9 +102,19 @@ const displayOperation=function() {
         const answer=roundResult(operate(displayOp, inputA, displayVar));
         input.textContent=answer;
         inputA=answer;
-        // console.log('inputA: ' +inputA);
-        // console.log('displayVar: ' +displayVar);
         displayVar='';
     }
 }
 
+
+// buttons.forEach(button => button.addEventListener('keydown',displayDigit));
+// window.addEventListener('click', (event) => {
+//     console.log(event.target.textContent);
+//   });
+numerals.forEach(button => { button.addEventListener('click', displayDigit) });
+
+btnOp.forEach(button => { button.addEventListener('click', displayOperation) });
+
+equalBtn.addEventListener('click', evaluate);
+
+display.appendChild(input);
