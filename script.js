@@ -39,7 +39,6 @@ function roundResult(number) {
 const clearBtn = document.querySelector('#clear');
 clearBtn.addEventListener('click',() => location.reload());
 
-const buttons=document.querySelectorAll('.btn');
 const numerals = document.querySelectorAll('.numerals');
 const decimalBtn=document.getElementById(".");
 const deleteBtn=document.querySelector("#backspace");
@@ -50,16 +49,6 @@ const input=document.createElement('div');
 let displayVar='';
 let displayOp='';
 let inputA='';
-
-// buttons.forEach(button => console.log(button.textContent));
-
-
-// console.log(deleteBtn.textContent);
-
-// const keyboardInput=function(event) {
-//     let key=event.target.textContent;
-//     console.log(key);
-// }
 
 const displayDigit=function() {
     if (displayVar==='' && this.id==='.') {
@@ -106,15 +95,43 @@ const displayOperation=function() {
     }
 }
 
-
-// buttons.forEach(button => button.addEventListener('keydown',displayDigit));
-// window.addEventListener('click', (event) => {
-//     console.log(event.target.textContent);
-//   });
 numerals.forEach(button => { button.addEventListener('click', displayDigit) });
 
 btnOp.forEach(button => { button.addEventListener('click', displayOperation) });
 
 equalBtn.addEventListener('click', evaluate);
 
+window.addEventListener('keydown', (event) => {
+	let getOperators = {
+		'/': '÷',
+		'x': 'X',
+		'*': 'X',
+		'+': '+',
+		'-': '-'
+	}
+	if(!isNaN(event.key) && event.key !== ' '){
+		document.getElementById(`${event.key}`).click();
+	}
+	if (['/', 'x', '+', '-', '*'].includes(event.key)) {
+		document.getElementById(getOperators[event.key]).click();
+	}
+	if (event.key === 'clear' || event.key ==='c') {
+		document.getElementById('clear').click();	
+	}
+    if (event.key === 'Backspace' || event.key ==='Delete') {
+		document.getElementById('backspace').click();	
+	}
+    if (event.key==='n') {
+        document.getElementById('pm').click();
+    }
+	if (event.key === '=' || event.key === 'Enter') {
+		document.getElementById('equals').click();	
+	}
+	if (event.key === '.') {
+		document.getElementById('.').click();	
+	}
+});
+
 display.appendChild(input);
+
+
