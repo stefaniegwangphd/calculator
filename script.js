@@ -1,19 +1,15 @@
 const add = function(a,b) {
     return a+b;
 }
-
 const subtract = function(a,b) {
     return a-b;
 }
-
 const multiply = function(a,b) {
     return a*b;
 }
-
 const divide = function(a,b) {
     return a/b
 }
-
 const operate = function(operation, x,y) {
     const a = Number(x);
     const b = Number(y);
@@ -41,7 +37,6 @@ clearBtn.addEventListener('click',() => location.reload());
 
 const numerals = document.querySelectorAll('.numerals');
 const decimalBtn=document.getElementById(".");
-const deleteBtn=document.querySelector("#backspace");
 const btnOp = document.querySelectorAll('.btnOp');
 const equalBtn = document.querySelector('#equals');
 const display=document.querySelector('#input');
@@ -69,6 +64,7 @@ const displayDigit=function() {
         decimalBtn.onclick = function() {
         this.disabled = true;}
     }
+    console.log(displayVar);
     input.textContent=displayVar;
 }
 
@@ -81,17 +77,20 @@ const evaluate=function() {
 }
 
 const displayOperation=function() {
-    displayOp =this.id;
+    newOp =this.id;
     if (inputA==='') {
+        displayOp=this.id;
         inputA=displayVar;
         displayVar='';
-        input.textContent=displayOp;
+        input.textContent=newOp;
+        console.log(inputA+displayOp);
     } 
     else {
         const answer=roundResult(operate(displayOp, inputA, displayVar));
-        input.textContent=answer;
         inputA=answer;
         displayVar='';
+        input.textContent=answer;
+        displayOp =newOp;        
     }
 }
 
@@ -109,9 +108,12 @@ window.addEventListener('keydown', (event) => {
 		'+': '+',
 		'-': '-'
 	}
-	if(!isNaN(event.key) && event.key !== ' '){
+    if(!isNaN(event.key) && event.key !== ' '){
 		document.getElementById(`${event.key}`).click();
 	}
+    // if(event.key>=0&& event.key<=9 && event.key !== ' '){
+	// 	document.getElementById(`${event.key}`).click();
+	// }
 	if (['/', 'x', '+', '-', '*'].includes(event.key)) {
 		document.getElementById(getOperators[event.key]).click();
 	}
@@ -133,5 +135,3 @@ window.addEventListener('keydown', (event) => {
 });
 
 display.appendChild(input);
-
-
